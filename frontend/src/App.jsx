@@ -89,7 +89,7 @@ const App = () => {
 						)}
 					</button>
 				</div>
-				<div className="flex justify-center mb-4 space-x-2 sm:space-x-4">
+				<div className="max-w-7xl mx-auto flex fex-col md:flex-row flex-wrap items-center justify-center gap-4">
 					{tabs.map((tab) => (
 						<button
 							key={tab.key}
