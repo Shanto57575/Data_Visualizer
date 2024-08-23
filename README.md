@@ -6,4 +6,4 @@ Data-Visualizer is a web application designed to analyze e-commerce data from a 
 
 [Frontend Live Site](https://data-visualizer3.netlify.app)
 
-[Backend Live Site](https://datavisualizerbackend-61ayfrfq6-shanto57575s-projects.vercel.app)
+[Backend Live Site](https://data-visualizer-backend.vercel.app)

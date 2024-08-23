@@ -7,8 +7,6 @@ const connectDB = async (maxRetries = 5, retryDelay = 5000) => {
         try {
             const dbConnection = await mongoose.connect(process.env.MONGO_URL, {
                 dbName: 'RQ_Analytics',
-                useNewUrlParser: true,
-                useUnifiedTopology: true,
             });
             console.log(`MONGODB CONNECTED ✅, CONNECTION HOST: ${dbConnection.connection.host}`);
             return;

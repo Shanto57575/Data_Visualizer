@@ -1,35 +1,30 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import CustomerLifetimeValueChart from "./components/CustomerLifetimeValueChart";
 import GeographicalDistributionChart from "./components/GeographicalDistributionChart";
 import NewCustomersChart from "./components/NewCustomersChart";
 import RepeatCustomersChart from "./components/RepeatCustomersChart";
 import SalesGrowthRateChart from "./components/SalesGrowthRateChart";
 import TotalSalesChart from "./components/TotalSalesChart";
-
-const LoadingSpinner = () => (
-	<div className="flex justify-center items-center h-screen">
-		<div className="animate-spin rounded-full h-24 w-24 border-t-2 border-b-2 border-sky-600"></div>
-	</div>
-);
+import {
+	Sun,
+	Moon,
+	BarChart2,
+	TrendingUp,
+	UserPlus,
+	Users,
+	Globe,
+	DollarSign,
+} from "lucide-react";
 
 const App = () => {
 	const [activeTab, setActiveTab] = useState("TotalSales");
-	const [loading, setLoading] = useState(true);
 	const [darkMode, setDarkMode] = useState(true);
 
 	const toggleTheme = () => {
 		setDarkMode(!darkMode);
 	};
 
-	useEffect(() => {
-		setLoading(true);
-		const timer = setTimeout(() => setLoading(false), 1000);
-		return () => clearTimeout(timer);
-	}, [activeTab]);
-
 	const renderChart = () => {
-		if (loading) return <LoadingSpinner />;
-
 		switch (activeTab) {
 			case "TotalSales":
 				return <TotalSalesChart />;
@@ -48,6 +43,35 @@ const App = () => {
 		}
 	};
 
+	const tabs = [
+		{ key: "TotalSales", label: "Total Sales", icon: <DollarSign size={20} /> },
+		{
+			key: "SalesGrowthRate",
+			label: "Sales Growth Rate",
+			icon: <TrendingUp size={20} />,
+		},
+		{
+			key: "NewCustomers",
+			label: "New Customers",
+			icon: <UserPlus size={20} />,
+		},
+		{
+			key: "RepeatCustomers",
+			label: "Repeat Customers",
+			icon: <Users size={20} />,
+		},
+		{
+			key: "GeographicalDistribution",
+			label: "Geographical Distribution",
+			icon: <Globe size={20} />,
+		},
+		{
+			key: "CustomerLifetimeValue",
+			label: "Customer Lifetime Value",
+			icon: <BarChart2 size={20} />,
+		},
+	];
+
 	return (
 		<div
 			className={darkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"}
@@ -57,38 +81,33 @@ const App = () => {
 					<h1 className="text-center text-2xl sm:text-3xl lg:text-4xl font-black text-sky-600 underline mb-4 sm:mb-0">
 						Data Visualizer
 					</h1>
-					<button
-						onClick={toggleTheme}
-						className="bg-sky-600 hover:bg-sky-500 hover:shadow-2xl hover:shadow-cyan-400 duration-500 text-white px-4 py-2 rounded-lg font-bold"
-					>
-						{darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+					<button onClick={toggleTheme} className="p-2">
+						{darkMode ? (
+							<Sun color="#2979FF" size={24} />
+						) : (
+							<Moon color="blue" size={24} />
+						)}
 					</button>
 				</div>
-				<div className="flex flex-wrap justify-center mb-4 space-x-2 sm:space-x-4">
-					{[
-						"TotalSales",
-						"SalesGrowthRate",
-						"NewCustomers",
-						"RepeatCustomers",
-						"GeographicalDistribution",
-						"CustomerLifetimeValue",
-					].map((tab) => (
+				<div className="flex justify-center mb-4 space-x-2 sm:space-x-4">
+					{tabs.map((tab) => (
 						<button
-							key={tab}
-							className={`px-2 sm:px-4 py-2 rounded-lg m-2 font-bold text-xs sm:text-base hover:bg-sky-300 hover:text-cyan-900 hover:shadow-2xl hover:shadow-cyan-400 duration-500 ${
-								activeTab === tab
+							key={tab.key}
+							className={`flex flex-wrap items-center justify-between rounded-lg px-3 py-3 mb-5 font-bold text-xs sm:text-base hover:bg-sky-300 hover:text-cyan-900 hover:shadow-2xl hover:shadow-cyan-400 duration-500 ${
+								activeTab === tab.key
 									? "bg-sky-600 text-white"
 									: darkMode
 									? "bg-gray-800 text-gray-400"
 									: "bg-gray-200 text-gray-600"
 							}`}
-							onClick={() => setActiveTab(tab)}
+							onClick={() => setActiveTab(tab.key)}
 						>
-							{tab}
+							{tab.icon}
+							<span>{tab.label}</span>
 						</button>
 					))}
 				</div>
-				<div className="rounded-lg max-w-full md:max-w-7xl mx-auto shadow-2xl shaodw-black">
+				<div className="rounded-lg max-w-full md:max-w-7xl mx-auto shadow-2xl shadow-black">
 					{renderChart()}
 				</div>
 			</div>

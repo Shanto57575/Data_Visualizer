@@ -2,9 +2,16 @@ import { useEffect, useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import axios from "../api/axiosConfig.js";
+import Loader from "./Loader.jsx";
 
 const CustomerLifetimeValueChart = () => {
 	const [chartOptions, setChartOptions] = useState({});
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		const timer = setTimeout(() => setLoading(false), 1000);
+		return () => clearTimeout(timer);
+	}, []);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -91,6 +98,8 @@ const CustomerLifetimeValueChart = () => {
 
 		fetchData();
 	}, []);
+
+	if (loading) return <Loader />;
 
 	return (
 		<div className="w-full p-2 md:p-5 font-serif">

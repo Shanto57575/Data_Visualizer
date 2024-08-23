@@ -2,11 +2,18 @@ import { useEffect, useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import axios from "../api/axiosConfig.js";
+import Loader from "./Loader.jsx";
 
 const TotalSalesChart = () => {
 	const [chartOptions, setChartOptions] = useState({});
 	const [startDate, setStartDate] = useState("2020-01-01");
 	const [endDate, setEndDate] = useState("2023-12-31");
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		const timer = setTimeout(() => setLoading(false), 1000);
+		return () => clearTimeout(timer);
+	}, []);
 
 	const fetchData = async () => {
 		try {
@@ -120,6 +127,8 @@ const TotalSalesChart = () => {
 			setEndDate(value);
 		}
 	};
+
+	if (loading) return <Loader />;
 
 	return (
 		<div className="w-full p-2 md:p-5 font-serif">
