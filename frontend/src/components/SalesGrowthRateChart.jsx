@@ -9,18 +9,14 @@ const SalesGrowthRateChart = () => {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		const timer = setTimeout(() => setLoading(false), 1000);
-		return () => clearTimeout(timer);
-	}, []);
-
-	useEffect(() => {
+		setLoading(true);
 		const fetchData = async () => {
 			try {
 				const response = await axios.get("/order/sales-growth-rate", {
 					params: { interval: "monthly" },
 				});
 				const data = response.data;
-
+				setLoading(false);
 				setChartOptions({
 					chart: {
 						backgroundColor: "#222222",

@@ -9,18 +9,14 @@ const RepeatCustomersChart = () => {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		const timer = setTimeout(() => setLoading(false), 1000);
-		return () => clearTimeout(timer);
-	}, []);
-
-	useEffect(() => {
+		setLoading(true);
 		const fetchData = async () => {
 			try {
 				const response = await axios.get(
 					"/customer/repeat-customers?timeframe=monthly"
 				);
 				const data = response.data;
-
+				setLoading(false);
 				const categories = data.map((item) => item._id);
 				const series = [
 					{

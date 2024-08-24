@@ -10,18 +10,14 @@ const TotalSalesChart = () => {
 	const [endDate, setEndDate] = useState("2023-12-31");
 	const [loading, setLoading] = useState(true);
 
-	useEffect(() => {
-		const timer = setTimeout(() => setLoading(false), 1000);
-		return () => clearTimeout(timer);
-	}, []);
-
 	const fetchData = async () => {
+		setLoading(true);
 		try {
 			const response = await axios.get("/order/sales-over-time", {
 				params: { startDate, endDate },
 			});
 			const data = response.data;
-
+			setLoading(false);
 			setChartOptions({
 				chart: {
 					type: "area",

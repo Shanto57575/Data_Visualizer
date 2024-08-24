@@ -8,7 +8,7 @@ const getAllOrders = async (req, res) => {
         }
         res.json(orders)
     } catch (error) {
-        res.status(500).send('Error fetching orders');
+        res.status(500).send('Error Fetching orders');
     }
 }
 

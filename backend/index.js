@@ -10,16 +10,19 @@ dotenv.config()
 
 const app = express()
 
-const allowedOrigins = [
-    'https://data-visualizer3.netlify.app',
-    'http://localhost:5173',
-];
-
 app.use(cors({
-    origin: allowedOrigins
+    origin: (origin, callback) => {
+        const allowedOrigins = [
+            'https://data-visualizer3.netlify.app',
+            'http://localhost:5173'
+        ];
+        if (allowedOrigins.includes(origin) || !origin) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    }
 }));
-
-connectDB()
 
 app.get('/', (req, res) => {
     res.send('Server is running Fine!')
@@ -34,6 +37,7 @@ app.use('/api/order', orderRoutes)
 
 const PORT = process.env.PORT || 5001
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
     console.log(`server is running on port ${PORT}`)
+    await connectDB()
 })

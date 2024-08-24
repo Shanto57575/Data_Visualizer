@@ -9,18 +9,14 @@ const CustomerLifetimeValueChart = () => {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		const timer = setTimeout(() => setLoading(false), 1000);
-		return () => clearTimeout(timer);
-	}, []);
-
-	useEffect(() => {
+		setLoading(true);
 		const fetchData = async () => {
 			try {
 				const response = await axios.get(
 					"/order/customer-lifetime-value-cohorts"
 				);
 				const data = response.data;
-
+				setLoading(false);
 				const categories = data.map(
 					(item) => `${item._id.year}-${item._id.month}`
 				);
